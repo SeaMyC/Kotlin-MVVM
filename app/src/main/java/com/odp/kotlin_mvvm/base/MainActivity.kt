@@ -1,9 +1,9 @@
-package com.odp.kotlin_mvvm
+package com.odp.kotlin_mvvm.base
 
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
+import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.adapter.TabLayoutAdapter
-import com.odp.kotlin_mvvm.base.BinDingActivity
 import com.odp.kotlin_mvvm.databinding.ActivityMainBinding
 
 class MainActivity : BinDingActivity<ActivityMainBinding>() {
