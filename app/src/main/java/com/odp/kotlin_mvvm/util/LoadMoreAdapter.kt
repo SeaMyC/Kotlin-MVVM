@@ -1,18 +1,18 @@
 package com.odp.kotlin_mvvm.util
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.databinding.LayoutFootviewBinding
-import com.odp.kotlin_mvvm.fragment.girl.GirlAdapter
 
 /**
  * @author  ChenHh
@@ -20,13 +20,13 @@ import com.odp.kotlin_mvvm.fragment.girl.GirlAdapter
  * @des  loadMoreAdapter
  **/
 abstract class LoadMoreAdapter<VH> : RecyclerView.Adapter<ViewHolder>() {
-    private var datas: MutableList<VH> = mutableListOf() // 数据源
+    var datas: MutableList<VH> = mutableListOf() // 数据源
 
     private val normalType = 0 // 第一种ViewType，正常的item
 
     private val footType = 1 // 第二种ViewType，底部的提示View
 
-    private var hasMore = true // 变量，是否有更多数据
+    protected var hasMore = true // 变量，是否有更多数据
 
     private var fadeTips = false // 变量，是否隐藏了底部的提示
 
@@ -47,7 +47,7 @@ abstract class LoadMoreAdapter<VH> : RecyclerView.Adapter<ViewHolder>() {
     abstract fun getSubItemCount(): Int
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-                context = parent.context
+        context = parent.context
         // 根据返回的ViewType，绑定不同的布局文件，这里只有两种
         return if (viewType == normalType) {
             setNormalHolder(parent, viewType)
@@ -65,8 +65,6 @@ abstract class LoadMoreAdapter<VH> : RecyclerView.Adapter<ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int, payloads: MutableList<Any>) {
         // 如果是正常的imte，直接设置TextView的值
         if (holder is FootHolder) {
-            // 之所以要设置可见，是因为我在没有更多数据时会隐藏了这个footView
-            holder.tips.visibility = View.VISIBLE
             // 只有获取数据为空时，hasMore为false，所以当我们拉到底部时基本都会首先显示“正在加载更多...”
             if (hasMore) {
                 // 不隐藏footView提示
@@ -76,9 +74,7 @@ abstract class LoadMoreAdapter<VH> : RecyclerView.Adapter<ViewHolder>() {
                 }
             } else {
                 if (datas.isNotEmpty()) {
-                    Toast.makeText(context, "无更多数据了喔~", Toast.LENGTH_SHORT).show()
                     holder.tips.text = "无更多数据了喔~"
-                    holder.tips.visibility = View.VISIBLE
                     // 将fadeTips设置true
                     fadeTips = true
                     // hasMore设为true是为了让再次拉到底时，会先显示正在加载更多
@@ -109,16 +105,9 @@ abstract class LoadMoreAdapter<VH> : RecyclerView.Adapter<ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    // 暴露接口，更新数据源，并修改hasMore的值，如果有增加数据，hasMore为true，否则为false
-    open fun updateList(
-        newDatas: MutableList<VH>?,
-        hasMore: Boolean
-    ) {
-        // 在原有的数据之上增加新数据
-        if (newDatas != null) {
-            datas.addAll(newDatas)
-        }
-        this.hasMore = hasMore
+    open fun loadMoreData(list: MutableList<VH>, more: Boolean) {
+        datas.addAll(list)
+        hasMore = more
         notifyDataSetChanged()
     }
 
@@ -132,4 +121,6 @@ abstract class LoadMoreAdapter<VH> : RecyclerView.Adapter<ViewHolder>() {
             tips = itemBinding.tips
         }
     }
+
+
 }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.odp.kotlin_mvvm.R
@@ -17,12 +18,16 @@ import com.odp.kotlin_mvvm.util.LoadMoreAdapter
  * @time   2020/8/18 10:15
  * @des
  **/
-class GirlAdapter : LoadMoreAdapter<MutableList<GankIoEntity>>() {
+class GirlAdapter(layoutManager: GridLayoutManager?) : LoadMoreAdapter<GankIoEntity>() {
     private lateinit var wealListener: IWealItemListener
-    private  var dataList: List<GankIoEntity> = mutableListOf()
+    var girlLayoutManager: GridLayoutManager? = null
+
+    init {
+        girlLayoutManager = layoutManager
+    }
 
     override fun getSubItemCount(): Int {
-        return dataList.size
+        return datas.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -39,12 +44,12 @@ class GirlAdapter : LoadMoreAdapter<MutableList<GankIoEntity>>() {
 
     override fun onBindNormalViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val normalHolder = holder as NormalHolder
-        normalHolder.bindData(position, dataList)
+        normalHolder.bindData(position, datas)
     }
 
-    fun setDatas(bean: List<GankIoEntity>?) {
+    fun setDataList(bean: MutableList<GankIoEntity>?) {
         if (bean != null) {
-            dataList = bean
+            datas = bean
             notifyDataSetChanged()
         }
     }
@@ -62,11 +67,29 @@ class GirlAdapter : LoadMoreAdapter<MutableList<GankIoEntity>>() {
         }
     }
 
+    fun updateData(list: MutableList<GankIoEntity>?, refresh: Boolean) {
+        if (list != null) {
+            loadMoreData(list, refresh)
+        }
+    }
+
     fun setItemClickListener(listener: IWealItemListener) {
         wealListener = listener
     }
 
     interface IWealItemListener {
         fun onItemListener(str: String?, view: View?)
+    }
+
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        if (hasMore && girlLayoutManager != null) {
+            girlLayoutManager!!.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    // 当position为最后一项时返回spanCount
+                    return if (position == itemCount - 1) girlLayoutManager!!.spanCount else 1
+                }
+            }
+        }
     }
 }

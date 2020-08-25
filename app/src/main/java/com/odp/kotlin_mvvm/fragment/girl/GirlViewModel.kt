@@ -14,9 +14,11 @@ import io.reactivex.schedulers.Schedulers
  **/
 class GirlViewModel : BaseViewModel() {
     private var page: Int = 1
-     var girlList: MutableLiveData<List<GankIoEntity>> = MutableLiveData()
+    var girlList: MutableLiveData<List<GankIoEntity>> = MutableLiveData()
+    var isRefresh = false
 
     fun getGirlList(refresh: Boolean) {
+        isRefresh = refresh
         if (refresh) {
             page = 1
         } else {
