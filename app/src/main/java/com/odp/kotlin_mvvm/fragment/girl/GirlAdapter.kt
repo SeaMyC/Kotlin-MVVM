@@ -44,7 +44,7 @@ class GirlAdapter(layoutManager: GridLayoutManager?) : LoadMoreAdapter<GankIoEnt
 
     override fun onBindNormalViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val normalHolder = holder as NormalHolder
-        normalHolder.bindData(position, datas)
+        normalHolder.bindData(position, datas, wealListener)
     }
 
     fun setDataList(bean: MutableList<GankIoEntity>?) {
@@ -54,27 +54,25 @@ class GirlAdapter(layoutManager: GridLayoutManager?) : LoadMoreAdapter<GankIoEnt
         }
     }
 
-    class NormalHolder(itemView: ViewDataBinding) : RecyclerView.ViewHolder(itemView.root) {
+    private class NormalHolder(itemView: ViewDataBinding) : RecyclerView.ViewHolder(itemView.root) {
         private val itemBinding: ItemFragementGirlBinding = itemView as ItemFragementGirlBinding
 
-        fun bindData(position: Int, list: List<GankIoEntity>) {
+        fun bindData(position: Int, list: List<GankIoEntity>, listener: IWealItemListener) {
             val gankIoEntity = list[position]
             Glide.with(itemView.context)
                 .load(gankIoEntity.url)
                 .placeholder(R.drawable.img_default_meizi)
                 .error(R.drawable.load_err)
                 .into(itemBinding.ivWeal)
+            itemBinding.ivWeal.setOnClickListener {
+                listener.onItemListener(gankIoEntity.url, itemBinding.ivWeal)
+            }
         }
     }
 
-    fun updateData(list: MutableList<GankIoEntity>?, refresh: Boolean) {
-        if (list != null) {
-            loadMoreData(list, refresh)
-        }
-    }
 
     fun setItemClickListener(listener: IWealItemListener) {
-        wealListener = listener
+        this.wealListener = listener
     }
 
     interface IWealItemListener {

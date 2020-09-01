@@ -1,5 +1,7 @@
 package com.odp.kotlin_mvvm.fragment.girl
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.base.BinDingFragment
+import com.odp.kotlin_mvvm.base.GirlActivity
 import com.odp.kotlin_mvvm.bean.GankIoEntity
 import com.odp.kotlin_mvvm.databinding.FragmentGirlBinding
 import com.odp.kotlin_mvvm.util.RecyclerItemDecoration
@@ -55,6 +58,15 @@ class GirlFragment : BinDingFragment<FragmentGirlBinding>() {
         })
 
 
+        initEvent(girlAdapter, model, girdLayoutManager)
+
+    }
+
+    private fun initEvent(
+        girlAdapter: GirlAdapter,
+        model: GirlViewModel,
+        girdLayoutManager: GridLayoutManager
+    ) {
         bindingView.refresh.setOnRefreshListener {
             bindingView.refresh.isRefreshing = true
             girlAdapter.resetDatas()
@@ -80,5 +92,16 @@ class GirlFragment : BinDingFragment<FragmentGirlBinding>() {
             }
         })
 
+        girlAdapter.setItemClickListener(object : GirlAdapter.IWealItemListener {
+            override fun onItemListener(str: String?, view: View?) {
+                val intent = Intent(activity, GirlActivity::class.java)
+                intent.putExtra("girl_image_url",str)
+                startActivity(
+                    intent,
+                    ActivityOptions.makeSceneTransitionAnimation(activity, view, "girl_image")
+                        .toBundle()
+                )
+            }
+        })
     }
 }
