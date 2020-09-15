@@ -6,23 +6,23 @@ import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.http.HttpServiceClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 /**
  * @author  ChenHh
  * @time   2020/9/14 15:22
  * @des  bannerModel
  **/
-class BannerModel : BaseViewModel() {
+class NewsModel : BaseViewModel() {
 
-    var bannerList: MutableLiveData<List<BannerEntity>> = MutableLiveData()
+    var newsList: MutableLiveData<List<BannerEntity>> = MutableLiveData()
 
-    fun getBannerList() {
+    fun getNewsList(type:String) {
         val subscribe = HttpServiceClient.INSTANCE.getBannerService()
-            .getBannerData("top","f527601230ad4a74c08491c13db2b78f")
+            .getBannerData(type,"f527601230ad4a74c08491c13db2b78f")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { bean -> bannerList.postValue(bean.result.data) }
+            .subscribe { bean -> newsList.postValue(bean.result.data) }
 
     }
+
 }

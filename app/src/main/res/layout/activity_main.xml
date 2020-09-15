@@ -6,16 +6,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/bg_dark"
         tools:context=".base.MainActivity">
         <com.odp.kotlin_mvvm.util.BannerView
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="220dp"/>
+            android:layout_height="180dp"/>
 
         <com.google.android.material.tabs.TabLayout
-            android:layout_marginTop="10dp"
+            android:background="#ffffff"
             android:id="@+id/tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

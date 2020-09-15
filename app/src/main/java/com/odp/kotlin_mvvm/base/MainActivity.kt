@@ -1,23 +1,20 @@
 package com.odp.kotlin_mvvm.base
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.adapter.TabLayoutAdapter
 import com.odp.kotlin_mvvm.bean.BannerEntity
-import com.odp.kotlin_mvvm.bean.GankIoEntity
+import com.odp.kotlin_mvvm.config.NEWS_TYPE_TOP
 import com.odp.kotlin_mvvm.databinding.ActivityMainBinding
-import com.odp.kotlin_mvvm.fragment.main.BannerModel
+import com.odp.kotlin_mvvm.fragment.main.NewsModel
 
 class MainActivity : BinDingActivity<ActivityMainBinding>() {
-    private lateinit var bannerModel: BannerModel
-    private val titles = listOf("A", "B", "C")
+    private lateinit var bannerModel: NewsModel
+    private val titles = listOf("sport", "girl", "C")
+    private var isFirst: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +31,21 @@ class MainActivity : BinDingActivity<ActivityMainBinding>() {
 
         val banner = bindingView.banner;
 
-        bannerModel = ViewModelProvider(this).get(BannerModel::class.java)
-        bannerModel.bannerList.observe(this, Observer<List<BannerEntity>> { bannerList ->
+        bannerModel = ViewModelProvider(this).get(NewsModel::class.java)
+        bannerModel.newsList.observe(this, Observer<List<BannerEntity>> { bannerList ->
             if (bannerList.isNotEmpty()) {
-                banner.setData(bannerList)
+                val subList = bannerList.subList(0, 5);
+                banner.setData(subList)
             }
         })
     }
 
     override fun onResume() {
         super.onResume()
-        bannerModel.getBannerList()
+        if (isFirst) {
+            bannerModel.getNewsList(NEWS_TYPE_TOP)
+            isFirst = false
+        }
 
     }
 

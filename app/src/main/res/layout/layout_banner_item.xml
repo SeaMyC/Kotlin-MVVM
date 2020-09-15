@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_margin="10dp"
     android:layout_height="match_parent">
+
 
     <ImageView
         android:scaleType="centerCrop"
@@ -20,7 +22,7 @@
         android:layout_gravity="bottom"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,19 +34,22 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_banner_tag_red_bg"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
             android:textColor="@android:color/white"
-            android:textSize="25sp"
-            tools:text="hot" />
+            android:textSize="12sp"
+            android:text="hot" />
 
         <TextView
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="16sp"
             tools:text="@string/app_name" />
     </LinearLayout>
 

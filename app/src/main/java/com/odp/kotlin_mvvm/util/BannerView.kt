@@ -26,7 +26,6 @@ import com.odp.kotlin_mvvm.bean.BannerEntity
 class BannerView : FrameLayout {
     private var lastPosition: Int = 0
     private var llPoints: LinearLayout
-    private lateinit var title: TextView
     private var viewPager: ViewPager2
 
     constructor(context: Context) : super(context)
@@ -57,7 +56,7 @@ class BannerView : FrameLayout {
         val viewPagerAdapter = ViewPagerAdapter()
         viewPager.adapter = viewPagerAdapter
         viewPagerAdapter.setData(list)
-
+        llPoints.removeAllViews()
         if (list.isNotEmpty()) {
             for (i in list.indices) {
                 val imageView = ImageView(context)
@@ -69,7 +68,7 @@ class BannerView : FrameLayout {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                layoutParams.marginEnd = 4
+                layoutParams.marginEnd = 12
                 imageView.layoutParams = layoutParams
                 //将指示点添加进容器
                 llPoints.addView(imageView)
@@ -84,9 +83,11 @@ class BannerView : FrameLayout {
                 val last: Int = lastPosition % list.size
                 llPoints.getChildAt(current)
                     .setBackgroundResource(R.drawable.shape_banner_white_point)
-                llPoints.getChildAt(last)
-                    .setBackgroundResource(R.drawable.shape_banner_grey_point)
-                lastPosition = position
+                if (position != 0) {
+                    llPoints.getChildAt(last)
+                        .setBackgroundResource(R.drawable.shape_banner_grey_point)
+                    lastPosition = position
+                }
             }
         })
 
@@ -102,11 +103,14 @@ class BannerView : FrameLayout {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_banner_item,parent,false))
+            return ViewHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_banner_item, parent, false)
+            )
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bindData(dataList[position%dataList.size])
+            holder.bindData(dataList[position % dataList.size])
         }
 
         override fun getItemCount(): Int {
