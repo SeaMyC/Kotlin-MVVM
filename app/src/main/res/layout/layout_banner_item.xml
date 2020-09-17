@@ -7,10 +7,14 @@
     android:layout_height="match_parent">
 
 
-    <ImageView
+    <com.odp.kotlin_mvvm.util.CustomRoundImageView
         android:scaleType="centerCrop"
         tools:background="@color/colorPrimary"
         android:id="@+id/imageView"
+        app:left_bottom_radius="5dp"
+        app:left_top_radius="5dp"
+        app:right_bottom_radius="5dp"
+        app:right_top_radius="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name" />

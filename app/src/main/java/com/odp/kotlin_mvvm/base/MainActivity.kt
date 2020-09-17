@@ -1,5 +1,6 @@
 package com.odp.kotlin_mvvm.base
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,8 @@ import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.config.NEWS_TYPE_TOP
 import com.odp.kotlin_mvvm.databinding.ActivityMainBinding
 import com.odp.kotlin_mvvm.fragment.main.NewsModel
+import com.odp.kotlin_mvvm.util.BannerView
+import com.odp.kotlin_mvvm.web.WebActivity
 
 class MainActivity : BinDingActivity<ActivityMainBinding>() {
     private lateinit var bannerModel: NewsModel
@@ -29,7 +32,14 @@ class MainActivity : BinDingActivity<ActivityMainBinding>() {
             tab.text = titles[position]
         }.attach()
 
-        val banner = bindingView.banner;
+        val banner = bindingView.banner
+        banner.setBannerClickListener(object : BannerView.IBannerClickListener {
+            override fun onItemClick(url: String?) {
+                val intent = Intent(this@MainActivity, WebActivity::class.java)
+                intent.putExtra("web_url", url)
+                startActivity(intent)
+            }
+        })
 
         bannerModel = ViewModelProvider(this).get(NewsModel::class.java)
         bannerModel.newsList.observe(this, Observer<List<BannerEntity>> { bannerList ->

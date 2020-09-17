@@ -14,6 +14,7 @@ import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.databinding.ItemFragementSportBinding
 import com.odp.kotlin_mvvm.databinding.ItemFragementSportSimpleBinding
+import com.odp.kotlin_mvvm.util.CustomRoundImageView
 import com.odp.kotlin_mvvm.util.ScreenUtils
 import kotlinx.android.synthetic.main.item_fragement_sport_simple.view.*
 import kotlin.math.roundToInt
@@ -24,13 +25,13 @@ import kotlin.math.roundToInt
  * @des
  **/
 class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var datas = mutableListOf<BannerEntity>()
+    var dataS = mutableListOf<BannerEntity>()
     lateinit var wealListener: IWealItemListener
     private val MULTIPLE_IMAGE: Int = 0
     private val SIMPLE_IMAGE: Int = 1
 
     override fun getItemCount(): Int {
-        return datas.size
+        return dataS.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -43,7 +44,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (!datas.isNullOrEmpty() && datas[position].pic2.isNullOrEmpty()) SIMPLE_IMAGE
+        return if (!dataS.isNullOrEmpty() && dataS[position].pic2.isNullOrEmpty()) SIMPLE_IMAGE
         else MULTIPLE_IMAGE
     }
 
@@ -66,7 +67,7 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setDataList(bean: MutableList<BannerEntity>?) {
         if (bean != null) {
-            this.datas = bean
+            this.dataS = bean
             notifyDataSetChanged()
         }
     }
@@ -76,14 +77,14 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         @SuppressLint("SetTextI18n")
         fun bindData(position: Int) {
-            if (!datas.isNullOrEmpty()) {
-                val bannerEntity = datas[position]
+            if (!dataS.isNullOrEmpty()) {
+                val bannerEntity = dataS[position]
                 itemBinding.tvTitle.text = bannerEntity.title
                 itemBinding.tvDesc.text =
                     StringBuffer().append(bannerEntity.authorName).append("  ")
                         .append(bannerEntity.date)
                 itemBinding.tvDelete.setOnClickListener {
-                    datas.removeAt(position)
+                    dataS.removeAt(position)
                     notifyDataSetChanged()
                 }
 
@@ -92,7 +93,8 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val screenWidth = screenUtils.getScreenWidth(itemView.context)
                 val width = (screenWidth - screenUtils.dpToPx(itemView.context, 40f)) / 3
 
-                val ivOne = ImageView(itemView.context)
+                val ivOne = CustomRoundImageView(itemView.context)
+                ivOne.setAllRadius(10)
                 val layoutParamsOne = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -107,7 +109,8 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     .into(ivOne)
                 itemBinding.llImage.addView(ivOne)
 
-                val ivTwo = ImageView(itemView.context)
+                val ivTwo = CustomRoundImageView(itemView.context)
+                ivTwo.setAllRadius(10)
                 val layoutParamsTwo = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -123,7 +126,8 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 itemBinding.llImage.addView(ivTwo)
 
                 if (!bannerEntity.pic3.isNullOrEmpty()) {
-                    val ivThree = ImageView(itemView.context)
+                    val ivThree = CustomRoundImageView(itemView.context)
+                    ivThree.setAllRadius(10)
                     val layoutParamsThree = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
@@ -152,14 +156,14 @@ class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         @SuppressLint("SetTextI18n")
         fun bindData(position: Int) {
-            if (!datas.isNullOrEmpty()) {
-                val bannerEntity = datas[position]
+            if (!dataS.isNullOrEmpty()) {
+                val bannerEntity = dataS[position]
                 itemBinding.tvTitle.text = bannerEntity.title
                 itemBinding.tvDesc.text =
                     StringBuffer().append(bannerEntity.authorName).append("  ")
                         .append(bannerEntity.date)
                 itemBinding.tvDelete.setOnClickListener {
-                    datas.removeAt(position)
+                    dataS.removeAt(position)
                     notifyDataSetChanged()
                 }
 

@@ -1,6 +1,5 @@
 package com.odp.kotlin_mvvm.fragment.sport
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,14 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.base.BinDingFragment
-import com.odp.kotlin_mvvm.base.GirlActivity
 import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.config.NEWS_TYPE_SPORT
 import com.odp.kotlin_mvvm.databinding.FragmentSportBinding
-import com.odp.kotlin_mvvm.fragment.girl.GirlAdapter
 import com.odp.kotlin_mvvm.fragment.main.NewsAdapter
 import com.odp.kotlin_mvvm.fragment.main.NewsModel
-import java.util.*
+import com.odp.kotlin_mvvm.web.WebActivity
 
 /**
  * @author  ChenHh
@@ -53,13 +50,9 @@ class SportFragment : BinDingFragment<FragmentSportBinding>() {
 
         newsAdapter.setItemClickListener(object : NewsAdapter.IWealItemListener {
             override fun onItemListener(str: String?, view: View?) {
-//                val intent = Intent(activity, GirlActivity::class.java)
-//                intent.putExtra("girl_image_url",str)
-//                startActivity(
-//                    intent,
-//                    ActivityOptions.makeSceneTransitionAnimation(activity, view, "girl_image")
-//                        .toBundle()
-//                )
+                val intent = Intent(activity, WebActivity::class.java)
+                intent.putExtra("web_url", str)
+                startActivity(intent)
             }
         })
 

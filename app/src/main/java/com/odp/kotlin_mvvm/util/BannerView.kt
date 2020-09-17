@@ -2,7 +2,6 @@ package com.odp.kotlin_mvvm.util
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +23,7 @@ import com.odp.kotlin_mvvm.bean.BannerEntity
  * @des
  **/
 class BannerView : FrameLayout {
+    lateinit var listener: IBannerClickListener
     private var lastPosition: Int = 0
     private var llPoints: LinearLayout
     private var viewPager: ViewPager2
@@ -35,14 +35,6 @@ class BannerView : FrameLayout {
         attrs,
         defStyleAttr
     )
-
-    constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyleAttr: Int,
-        defStyleRes: Int
-    ) : super(context, attrs, defStyleAttr, defStyleRes)
-
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.layout_banner_view, this, true)
@@ -93,7 +85,7 @@ class BannerView : FrameLayout {
 
     }
 
-    private class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
+    inner class ViewPagerAdapter : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
         private var dataList: List<BannerEntity> = listOf()
 
@@ -117,7 +109,7 @@ class BannerView : FrameLayout {
             return Int.MAX_VALUE
         }
 
-        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private var imageView: ImageView = itemView.findViewById(R.id.imageView)
             private var title: TextView = itemView.findViewById(R.id.tv_title)
 
@@ -129,9 +121,19 @@ class BannerView : FrameLayout {
                         .error(R.drawable.load_err)
                         .into(imageView)
                 }
-
+                imageView.setOnClickListener {
+                    listener.onItemClick(entity.url)
+                }
                 title.text = entity.title
             }
         }
+    }
+
+    fun setBannerClickListener(listener: IBannerClickListener) {
+        this.listener = listener
+    }
+
+    interface IBannerClickListener {
+        fun onItemClick(url: String?)
     }
 }
