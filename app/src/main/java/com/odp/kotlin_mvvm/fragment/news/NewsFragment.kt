@@ -1,41 +1,43 @@
-package com.odp.kotlin_mvvm.fragment.sport
+package com.odp.kotlin_mvvm.fragment.news
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.base.BinDingFragment
 import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.config.NEWS_TYPE_SPORT
-import com.odp.kotlin_mvvm.databinding.FragmentSportBinding
+import com.odp.kotlin_mvvm.databinding.FragmentNewsBinding
 import com.odp.kotlin_mvvm.fragment.main.SportAdapter
 import com.odp.kotlin_mvvm.fragment.main.SportModel
-import com.odp.kotlin_mvvm.web.WebActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * @author  ChenHh
- * @time   2020/9/15 15:36
- * @des  sport fragment
+ * @time   2020/12/9 14:20
+ * @des
  **/
-class SportFragment : BinDingFragment<FragmentSportBinding>() {
+@AndroidEntryPoint
+class NewsFragment : BinDingFragment<FragmentNewsBinding>() {
+    private val model: NewsViewModel by viewModels()
 
     override fun getLayout(): Int {
-        return R.layout.fragment_sport
+        return R.layout.fragment_news
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model = ViewModelProvider(this).get(SportModel::class.java)
         val newsAdapter = SportAdapter()
         bindingView.recyclerView.adapter = newsAdapter
         bindingView.recyclerView.layoutManager = LinearLayoutManager(context)
-        model.getNewsList(NEWS_TYPE_SPORT)
-        model.newsList.observe(viewLifecycleOwner, Observer { result ->
+
+        model.data.observe(viewLifecycleOwner, Observer { result ->
             if (result.isNotEmpty()) {
                 val mutableList = result as MutableList<BannerEntity>
                 newsAdapter.setDataList(mutableList)
@@ -45,16 +47,7 @@ class SportFragment : BinDingFragment<FragmentSportBinding>() {
 
         bindingView.refresh.setOnRefreshListener {
             bindingView.refresh.isRefreshing = true
-            model.getNewsList(NEWS_TYPE_SPORT)
+            model.loadData(NEWS_TYPE_SPORT)
         }
-
-        newsAdapter.setItemClickListener(object : SportAdapter.IWealItemListener {
-            override fun onItemListener(str: String?, view: View?) {
-                val intent = Intent(activity, WebActivity::class.java)
-                intent.putExtra("web_url", str)
-                startActivity(intent)
-            }
-        })
-
     }
 }

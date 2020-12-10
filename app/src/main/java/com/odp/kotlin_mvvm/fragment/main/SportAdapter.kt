@@ -24,7 +24,7 @@ import kotlin.math.roundToInt
  * @time   2020/8/18 10:15
  * @des
  **/
-class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var dataS = mutableListOf<BannerEntity>()
     lateinit var wealListener: IWealItemListener
     private val MULTIPLE_IMAGE: Int = 0

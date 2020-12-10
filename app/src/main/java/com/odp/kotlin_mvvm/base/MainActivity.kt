@@ -10,12 +10,14 @@ import com.odp.kotlin_mvvm.adapter.TabLayoutAdapter
 import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.config.NEWS_TYPE_TOP
 import com.odp.kotlin_mvvm.databinding.ActivityMainBinding
-import com.odp.kotlin_mvvm.fragment.main.NewsModel
+import com.odp.kotlin_mvvm.fragment.main.SportModel
 import com.odp.kotlin_mvvm.util.BannerView
 import com.odp.kotlin_mvvm.web.WebActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : BinDingActivity<ActivityMainBinding>() {
-    private lateinit var bannerModel: NewsModel
+    private lateinit var bannerModel: SportModel
     private val titles = listOf("sport", "girl", "C")
     private var isFirst: Boolean = true
 
@@ -41,7 +43,7 @@ class MainActivity : BinDingActivity<ActivityMainBinding>() {
             }
         })
 
-        bannerModel = ViewModelProvider(this).get(NewsModel::class.java)
+        bannerModel = ViewModelProvider(this).get(SportModel::class.java)
         bannerModel.newsList.observe(this, Observer<List<BannerEntity>> { bannerList ->
             if (bannerList.isNotEmpty()) {
                 val subList = bannerList.subList(0, 5);

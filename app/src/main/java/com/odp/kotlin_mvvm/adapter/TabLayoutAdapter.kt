@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.odp.kotlin_mvvm.fragment.girl.GirlFragment
+import com.odp.kotlin_mvvm.fragment.news.NewsFragment
 import com.odp.kotlin_mvvm.fragment.sport.SportFragment
 
 /**
@@ -20,9 +21,8 @@ class TabLayoutAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 //        girlFragment1.setIndex(0)
         val girlFragment2 = GirlFragment()
         girlFragment2.setIndex(1)
-        val girlFragment3 = GirlFragment()
-        girlFragment3.setIndex(2)
-        fragments = listOf(girlFragment1, girlFragment2, girlFragment3)
+        val newsFragment = NewsFragment()
+        fragments = listOf(girlFragment1, girlFragment2, newsFragment)
 
     }
 
