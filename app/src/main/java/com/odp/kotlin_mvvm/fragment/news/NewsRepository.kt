@@ -1,6 +1,10 @@
 package com.odp.kotlin_mvvm.fragment.news
 
 import com.odp.kotlin_mvvm.bean.BannerEntity
+import com.odp.kotlin_mvvm.bean.BannerResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * @author  ChenHh
@@ -10,7 +14,9 @@ import com.odp.kotlin_mvvm.bean.BannerEntity
 
 open class NewsRepository : BaseRepository() {
 
-    suspend fun getNewsData(type:String): ResponseData<List<BannerEntity>> = request {
-        RetrofitClient.create(INewsService::class.java).getBannerData(type,"f527601230ad4a74c08491c13db2b78f");
+    suspend fun getNewsData(type: String): BannerResponse = requestBanner<BannerResponse> {
+        RetrofitClient.create(INewsService::class.java)
+            .getBannerData(type, "f527601230ad4a74c08491c13db2b78f")
     }
+
 }

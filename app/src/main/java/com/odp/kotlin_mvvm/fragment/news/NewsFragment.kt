@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.base.BinDingFragment
@@ -13,9 +11,7 @@ import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.config.NEWS_TYPE_SPORT
 import com.odp.kotlin_mvvm.databinding.FragmentNewsBinding
 import com.odp.kotlin_mvvm.fragment.main.SportAdapter
-import com.odp.kotlin_mvvm.fragment.main.SportModel
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * @author  ChenHh

@@ -1,5 +1,6 @@
 package com.odp.kotlin_mvvm.fragment.news
 
+import com.odp.kotlin_mvvm.bean.BannerResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,6 +17,13 @@ open class BaseRepository {
             when (errorCode) {
                 100 -> throw TokenInvalidException()
             }
+            call()
+        }
+    }
+
+    suspend fun <T : Any> requestBanner(call: suspend () -> BannerResponse): BannerResponse {
+        return withContext(Dispatchers.IO) { call.invoke() }.apply {
+            call()
         }
     }
 
