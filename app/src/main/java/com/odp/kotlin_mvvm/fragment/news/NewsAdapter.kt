@@ -1,10 +1,9 @@
-package com.odp.kotlin_mvvm.fragment.main
+package com.odp.kotlin_mvvm.fragment.news
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -24,7 +23,7 @@ import kotlin.math.roundToInt
  * @time   2020/8/18 10:15
  * @des
  **/
-class SportAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class NewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var dataS = mutableListOf<BannerEntity>()
     lateinit var wealListener: IWealItemListener
     private val MULTIPLE_IMAGE: Int = 0

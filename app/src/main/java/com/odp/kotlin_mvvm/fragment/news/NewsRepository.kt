@@ -1,10 +1,6 @@
 package com.odp.kotlin_mvvm.fragment.news
 
-import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.bean.BannerResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 /**
  * @author  ChenHh
