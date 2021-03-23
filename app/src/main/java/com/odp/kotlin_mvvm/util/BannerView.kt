@@ -2,6 +2,7 @@ package com.odp.kotlin_mvvm.util
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,17 +70,16 @@ class BannerView : FrameLayout {
 
         viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
                 //轮播时，改变指示点
                 val current = position % list.size
                 val last: Int = lastPosition % list.size
-                llPoints.getChildAt(current)
-                    .setBackgroundResource(R.drawable.shape_banner_white_point)
                 if (position != 0) {
                     llPoints.getChildAt(last)
                         .setBackgroundResource(R.drawable.shape_banner_grey_point)
                     lastPosition = position
                 }
+                llPoints.getChildAt(current)
+                    .setBackgroundResource(R.drawable.shape_banner_white_point)
             }
         })
 

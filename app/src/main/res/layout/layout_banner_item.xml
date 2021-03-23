@@ -20,6 +20,8 @@
         android:contentDescription="@string/app_name" />
 
     <LinearLayout
+        android:padding="5dp"
+        android:background="#26000000"
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
