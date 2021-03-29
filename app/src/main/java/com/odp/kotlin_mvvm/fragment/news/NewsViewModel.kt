@@ -1,10 +1,10 @@
 package com.odp.kotlin_mvvm.fragment.news
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.odp.kotlin_mvvm.bean.BannerEntity
 import com.odp.kotlin_mvvm.config.NEWS_TYPE_SPORT
+import com.odp.kotlin_mvvm.coroutine.XBaseViewModel
 
 /**
  * @author  ChenHh

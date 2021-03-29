@@ -23,11 +23,6 @@ import com.odp.kotlin_mvvm.util.RecyclerItemDecoration
  **/
 class GirlFragment : BinDingFragment<FragmentGirlBinding>() {
     private var lastVisibleItem: Int = 0
-    private var indexNumber: Int = 0
-
-    fun setIndex(index: Int) {
-        indexNumber = index
-    }
 
     override fun getLayout(): Int {
         return R.layout.fragment_girl

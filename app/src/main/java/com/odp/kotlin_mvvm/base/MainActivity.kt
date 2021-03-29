@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BinDingActivity<ActivityMainBinding>() {
     private val bannerModel: NewsViewModel by viewModels()
-    private val titles = listOf("sport", "girl", "C")
+    private val titles = listOf("movie", "girl", "sport")
     private var isFirst: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {

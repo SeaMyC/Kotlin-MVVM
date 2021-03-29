@@ -1,6 +1,8 @@
 package com.odp.kotlin_mvvm.fragment.news
 
 import com.odp.kotlin_mvvm.bean.BannerResponse
+import com.odp.kotlin_mvvm.coroutine.BaseRepository
+import com.odp.kotlin_mvvm.coroutine.RetrofitClient
 
 /**
  * @author  ChenHh
