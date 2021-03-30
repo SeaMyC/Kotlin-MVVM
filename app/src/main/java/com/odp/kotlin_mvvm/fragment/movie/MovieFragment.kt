@@ -2,16 +2,16 @@ package com.odp.kotlin_mvvm.fragment.movie
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.odp.kotlin_mvvm.R
 import com.odp.kotlin_mvvm.base.BinDingFragment
+import com.odp.kotlin_mvvm.bean.DiscoverMovieEntity
 import com.odp.kotlin_mvvm.bean.HotMovieEntity
 import com.odp.kotlin_mvvm.databinding.FragmentMovieBinding
-import com.odp.kotlin_mvvm.fragment.news.NewsViewModel
+import com.odp.kotlin_mvvm.util.DiscoverItemDecoration
 import com.odp.kotlin_mvvm.util.HotMovieItemDecoration
 import com.odp.kotlin_mvvm.util.ScreenUtils
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MovieFragment : BinDingFragment<FragmentMovieBinding>() {
     private lateinit var hotMovieAdapter: HotMovieAdapter
+    private lateinit var discoverAdapter: DiscoverMovieAdapter
     private val model: MovieViewModel by viewModels()
 
     override fun getLayout(): Int {
@@ -35,7 +36,7 @@ class MovieFragment : BinDingFragment<FragmentMovieBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model.data.observe(viewLifecycleOwner, Observer { result ->
+        model.hotMovieData.observe(viewLifecycleOwner, Observer { result ->
             if (result.isNotEmpty()) {
                 bindingView.refresh.isRefreshing = false
                 val mutableList = result as MutableList<HotMovieEntity>
@@ -54,6 +55,23 @@ class MovieFragment : BinDingFragment<FragmentMovieBinding>() {
         bindingView.refresh.setOnRefreshListener {
             bindingView.refresh.isRefreshing = true
             model.requestHotList(50)
+            model.requestDiscoverList()
         }
+
+        model.discoverData.observe(viewLifecycleOwner, Observer { result ->
+            if (result.isNotEmpty()) {
+                bindingView.refresh.isRefreshing = false
+                val mutableList = result as MutableList<DiscoverMovieEntity>
+                discoverAdapter.setDataList(mutableList)
+            }
+        })
+        discoverAdapter = DiscoverMovieAdapter()
+        bindingView.rvDiscover.adapter = discoverAdapter
+        val discoverLinearLayoutManager = LinearLayoutManager(context)
+        discoverLinearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        bindingView.rvDiscover.layoutManager = discoverLinearLayoutManager
+        bindingView.rvDiscover.addItemDecoration(DiscoverItemDecoration(ScreenUtils().dpToPxInt(context,10F)))
+
+
     }
 }

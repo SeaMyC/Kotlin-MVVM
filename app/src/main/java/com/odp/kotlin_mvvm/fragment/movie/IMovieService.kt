@@ -1,6 +1,7 @@
 package com.odp.kotlin_mvvm.fragment.movie
 
 import com.odp.kotlin_mvvm.bean.BannerResponse
+import com.odp.kotlin_mvvm.bean.DiscoverMovieEntity
 import com.odp.kotlin_mvvm.bean.MovieEntity
 import com.odp.kotlin_mvvm.bean.MovieResponse
 import com.odp.kotlin_mvvm.coroutine.ResponseData
@@ -19,4 +20,9 @@ interface IMovieService {
     @GET("mmdb/movie/v3/list/hot.json")
     suspend fun getHostList(@Query("limit") limit: Int)
             : ResponseData<MovieEntity>
+
+
+    @GET("mmdb/movie/lp/list.json")
+    suspend fun getDiscoverList()
+            : ResponseData<List<DiscoverMovieEntity>>
 }

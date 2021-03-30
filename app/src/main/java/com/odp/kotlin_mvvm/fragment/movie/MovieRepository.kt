@@ -1,6 +1,7 @@
 package com.odp.kotlin_mvvm.fragment.movie
 
 import com.odp.kotlin_mvvm.bean.BannerResponse
+import com.odp.kotlin_mvvm.bean.DiscoverMovieEntity
 import com.odp.kotlin_mvvm.bean.MovieEntity
 import com.odp.kotlin_mvvm.bean.MovieResponse
 import com.odp.kotlin_mvvm.coroutine.BaseRepository
@@ -19,6 +20,11 @@ open class MovieRepository : BaseRepository() {
     suspend fun getHotList(limit: Int): ResponseData<MovieEntity> = request {
         RetrofitClient.createMovie(IMovieService::class.java)
             .getHostList(limit)
+    }
+
+    suspend fun getDiscoverList(): ResponseData<List<DiscoverMovieEntity>> = request {
+        RetrofitClient.createMovie(IMovieService::class.java)
+            .getDiscoverList()
     }
 
 }
