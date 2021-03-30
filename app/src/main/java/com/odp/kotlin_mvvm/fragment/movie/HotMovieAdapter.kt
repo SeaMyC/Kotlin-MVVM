@@ -40,6 +40,7 @@ class HotMovieAdapter : RecyclerView.Adapter<HotMovieAdapter.MovieViewHolder>() 
         return dataS.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: HotMovieAdapter.MovieViewHolder, position: Int) {
         holder.bindData(position)
     }

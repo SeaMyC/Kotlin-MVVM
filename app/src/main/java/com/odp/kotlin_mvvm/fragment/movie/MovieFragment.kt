@@ -38,7 +38,9 @@ class MovieFragment : BinDingFragment<FragmentMovieBinding>() {
         model.data.observe(viewLifecycleOwner, Observer { result ->
             if (result.isNotEmpty()) {
                 bindingView.refresh.isRefreshing = false
-                hotMovieAdapter.setDataList(result as MutableList<HotMovieEntity>)
+                val mutableList = result as MutableList<HotMovieEntity>
+                hotMovieAdapter.setDataList(mutableList)
+                bindingView.hot.tvTotalCount.text= String.format(getString(R.string.movie_hot_total_count),mutableList.size)
             }
         })
         hotMovieAdapter = HotMovieAdapter()

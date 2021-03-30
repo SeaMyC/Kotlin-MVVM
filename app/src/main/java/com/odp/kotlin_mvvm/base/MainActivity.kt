@@ -26,6 +26,7 @@ class MainActivity : BinDingActivity<ActivityMainBinding>() {
 
         val tabLayoutAdapter = TabLayoutAdapter(this)
         bindingView.viewPager.adapter = tabLayoutAdapter
+        bindingView.viewPager.isUserInputEnabled=false
         //viewPager2的写法
         TabLayoutMediator(
             bindingView.tab,

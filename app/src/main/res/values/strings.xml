@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Kotlin-MVVM</string>
-    <string name="movie_hot">Hot</string>
+    <string name="movie_hot">正在热映</string>
+    <string name="movie_hot_total_count">总共%d部 > </string>
 </resources>
